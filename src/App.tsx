@@ -1,46 +1,90 @@
-import { motion } from "motion/react";
-import { ArrowUpRight, Scissors, Instagram, Sparkles, BadgeCheck, MapPin, Star, MessageCircle, Map, ChevronRight, User } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowUpRight, Scissors, Instagram, Sparkles, BadgeCheck, MapPin, Star, MessageCircle, Map, ChevronRight, User, Menu, X } from "lucide-react";
 import { BlurText } from "./components/BlurText";
 import { GRO_LOGO } from "./logo";
+import { useState } from "react";
 
 const WA_NUMBER = "601110501080";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20GRO%2C%20I%27d%20like%20to%20book%20a%20haircut.`;
 const WA_DISPLAY = "+60 11-1050 1080";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 py-3 bg-white border-b border-gray-200 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Left */}
-        <div className="flex items-center gap-3 cursor-pointer group">
-          {/* Logo */}
-          <div className="h-12 w-12 relative flex items-center justify-center bg-white rounded-full overflow-hidden group-hover:scale-105 transition-transform shrink-0 border-2 border-black">
-             <img 
-               src={GRO_LOGO} 
-               alt="GRO Logo" 
-               className="w-full h-full object-contain" 
-             />
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 py-3 bg-white border-b border-gray-200 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Left */}
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 -ml-2 text-black">
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+            {/* Logo */}
+            <div className="h-12 w-12 relative flex items-center justify-center bg-white rounded-full overflow-hidden group-hover:scale-105 transition-transform shrink-0 border-2 border-black ml-2 lg:ml-0">
+               <img 
+                 src={GRO_LOGO} 
+                 alt="GRO Logo" 
+                 className="w-full h-full object-contain" 
+               />
+            </div>
+            <div className="hidden sm:flex flex-col items-start leading-none gap-0.5">
+              <span className="font-heading font-black text-sm md:text-lg tracking-tighter text-black uppercase group-hover:text-gray-600 transition-colors whitespace-nowrap">GRO Barbershop</span>
+            </div>
           </div>
-          <div className="flex flex-col items-start leading-none gap-0.5">
-            <span className="font-heading font-black text-lg tracking-tighter text-black uppercase group-hover:text-gray-600 transition-colors">GRO Barbershop</span>
+
+          {/* Center */}
+          <div className="hidden lg:flex items-center gap-8">
+            {['Home', 'Services', 'Location', 'Barbers'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="text-xs uppercase tracking-widest text-[#555] hover:text-black transition-colors font-semibold">
+                {item}
+              </a>
+            ))}
           </div>
-        </div>
 
-        {/* Center */}
-        <div className="hidden md:flex items-center gap-8">
-          {['Home', 'Services', 'Location', 'Barbers'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-xs uppercase tracking-widest text-[#555] hover:text-black transition-colors font-semibold">
-              {item}
-            </a>
-          ))}
+          {/* Right */}
+          <a href={WA_LINK} target="_blank" rel="noreferrer" className="bg-black text-white px-4 py-2 sm:px-6 sm:py-2.5 text-[10px] sm:text-xs uppercase tracking-widest font-bold flex items-center gap-1.5 hover:bg-gray-800 transition-all shrink-0">
+            Book Now
+          </a>
         </div>
+      </nav>
 
-        {/* Right */}
-        <a href={WA_LINK} target="_blank" rel="noreferrer" className="bg-black text-white px-6 py-2.5 text-xs uppercase tracking-widest font-bold flex items-center gap-1.5 hover:bg-gray-800 transition-all">
-          Book Now
-        </a>
-      </div>
-    </nav>
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-white pt-24 px-6 pb-6 lg:hidden flex flex-col items-center justify-center border-b border-gray-200"
+            style={{ height: "100vh" }}
+          >
+            <div className="flex flex-col items-center gap-8 w-full max-w-sm">
+              {['Home', 'Services', 'Location', 'Barbers'].map((item) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`} 
+                  onClick={() => setIsOpen(false)}
+                  className="text-2xl font-heading font-black uppercase tracking-widest text-black hover:text-gray-600 transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
+              <a 
+                href={WA_LINK} 
+                target="_blank" 
+                rel="noreferrer" 
+                onClick={() => setIsOpen(false)}
+                className="mt-8 bg-black text-white px-10 py-4 w-full flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors text-sm font-bold tracking-widest uppercase"
+              >
+                <span>Book on WhatsApp</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -49,10 +93,10 @@ function Hero() {
     <section id="home" className="relative min-h-[90vh] pt-32 pb-16 px-6 lg:px-12 flex flex-col justify-center items-center bg-white">
       <div className="w-full max-w-7xl mx-auto flex flex-col items-center text-center">
         
-        <div className="w-full max-w-5xl mx-auto mb-8">
+        <div className="w-full max-w-5xl mx-auto mb-8 px-2 md:px-0">
           <BlurText 
             text="FIND YOUR FORTE." 
-            className="text-[3rem] md:text-[5rem] lg:text-[7rem] font-heading font-black text-black leading-[0.9] tracking-tighter uppercase" 
+            className="text-[2.5rem] sm:text-[3rem] md:text-[5rem] lg:text-[7rem] font-heading font-black text-black leading-[0.9] tracking-tighter uppercase" 
           />
         </div>
 
@@ -123,9 +167,9 @@ function About() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="flex-1 w-full bg-white p-12 md:p-20 flex flex-col justify-center"
+          className="flex-1 w-full bg-white p-8 md:p-12 lg:p-20 flex flex-col justify-center"
         >
-          <h2 className="text-4xl lg:text-6xl font-heading font-bold text-black leading-[1] tracking-tighter uppercase mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-bold text-black leading-[1] tracking-tighter uppercase mb-6">
             A word <br />From Our <br />Founder
           </h2>
           
@@ -162,19 +206,31 @@ function About() {
 
 function Services() {
   return (
-    <section id="services" className="py-32 px-6 lg:px-12 bg-white">
+    <section id="services" className="py-32 px-6 lg:px-12 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         
-        <div className="mb-20 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-20 text-center"
+        >
           <h2 className="text-4xl md:text-5xl font-heading text-black font-black uppercase tracking-tighter mb-8">Featured Services</h2>
           <a href={WA_LINK} target="_blank" rel="noreferrer" className="bg-black text-white px-8 py-3 uppercase tracking-widest text-xs font-bold hover:bg-gray-800 transition-colors inline-block">
             See All Services &rarr;
           </a>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           {/* Service 1 */}
-          <div className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative"
+          >
             <div className="absolute top-4 left-4 bg-black text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 z-10">Signature</div>
             <div className="aspect-square w-full bg-gray-200 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Barber styling hair" className="w-full h-full object-cover filter grayscale" />
@@ -189,10 +245,16 @@ function Services() {
                 Book Service
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Service 2 */}
-          <div className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative"
+          >
             <div className="absolute top-4 left-4 bg-black text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 z-10">Promo</div>
             <div className="aspect-square w-full bg-gray-200 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=800&q=80" alt="Perm and texture" className="w-full h-full object-cover filter grayscale" />
@@ -207,10 +269,16 @@ function Services() {
                 Book Combo
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Service 3 */}
-          <div className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="bg-[#FAF9F6] border border-gray-200 flex flex-col w-full relative"
+          >
             <div className="absolute top-4 left-4 bg-gray-300 text-black text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 z-10">Groups</div>
             <div className="aspect-square w-full bg-gray-200 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1549463278-f7902d245dae?auto=format&fit=crop&w=800&q=80" alt="Barbershop chair" className="w-full h-full object-cover filter grayscale" />
@@ -225,7 +293,7 @@ function Services() {
                 Enquire Now
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -241,22 +309,35 @@ function Features() {
   ];
 
   return (
-    <section className="py-32 px-6 lg:px-12 bg-white">
+    <section className="py-32 px-6 lg:px-12 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-20 text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-20 text-center"
+        >
           <h2 className="text-4xl md:text-5xl font-heading text-black font-black uppercase tracking-tighter mb-4">Why GRO.</h2>
           <p className="text-gray-500 font-body text-lg">The difference is in the exact details.</p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {cards.map((c, i) => (
-            <div key={i} className="bg-[#FAF9F6] p-8 border border-gray-200 flex flex-col hover:border-black transition-colors duration-300">
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+              className="bg-[#FAF9F6] p-8 border border-gray-200 flex flex-col hover:border-black transition-colors duration-300"
+            >
               <div className="bg-white w-14 h-14 flex items-center justify-center mb-8 border border-gray-200">
                 <c.icon className="w-5 h-5 text-black" />
               </div>
               <h3 className="text-lg font-bold uppercase tracking-wide text-black mb-3">{c.title}</h3>
               <p className="text-gray-500 font-medium text-sm leading-relaxed">{c.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -272,17 +353,30 @@ function Testimonials() {
   ];
 
   return (
-    <section id="gallery" className="py-32 px-6 lg:px-12 bg-gray-50">
+    <section id="gallery" className="py-32 px-6 lg:px-12 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         
-        <div className="mb-20 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-20 text-center"
+        >
           <h2 className="text-4xl md:text-5xl font-heading text-black font-black uppercase tracking-tighter mb-4">Loyalty Rewarded</h2>
           <p className="text-gray-500 font-body text-lg">Loved across Perlis.</p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 w-full">
           {reviews.map((r, i) => (
-            <div key={i} className="bg-white p-10 flex flex-col border border-gray-200 hover:shadow-lg transition-shadow">
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: "easeOut" }}
+              className="bg-white p-10 flex flex-col border border-gray-200 hover:shadow-lg transition-shadow"
+            >
               <div className="flex items-center gap-1 mb-8 text-black">
                 {[...Array(5)].map((_, idx) => <Star key={idx} className="w-4 h-4 fill-current" />)}
               </div>
@@ -293,12 +387,18 @@ function Testimonials() {
                 </div>
                 <span className="font-bold text-black text-xs uppercase tracking-widest">{r.author}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* IG Grid */}
-        <div className="w-full">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full"
+        >
           <div className="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
             <h3 className="text-sm font-bold uppercase tracking-widest text-black">From the Chair</h3>
             <a href="https://instagram.com/guntingrambutorang" target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black flex items-center gap-2 transition-colors">
@@ -320,7 +420,7 @@ function Testimonials() {
               </a>
             ))}
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
@@ -329,16 +429,28 @@ function Testimonials() {
 
 function Location() {
   return (
-    <section className="py-32 px-6 lg:px-12 bg-gray-50 border-t border-gray-200">
+    <section id="location" className="py-24 sm:py-32 px-6 lg:px-12 bg-gray-50 border-t border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-heading text-black font-black uppercase tracking-tighter mb-4">Visit the shop.</h2>
           <p className="text-gray-500 font-body text-lg">Central Kangar, Perlis. Easy parking, pristine environment.</p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
           {/* Map iframe */}
-          <div className="flex-1 w-full bg-white border border-gray-200 min-h-[400px] p-2">
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex-1 w-full bg-white border border-gray-200 min-h-[400px] p-2"
+          >
             <iframe 
                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15878.528766100588!2d100.187311!3d6.440263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304cae44a1b026df%3A0xe7a505b87ac08cf2!2sKangar%2C%20Perlis%2C%20Malaysia!5e0!3m2!1sen!2sus!4v1716223594191!5m2!1sen!2sus"
                width="100%" 
@@ -349,9 +461,15 @@ function Location() {
                referrerPolicy="no-referrer-when-downgrade"
                className="grayscale contrast-[1.1] opacity-90"
             ></iframe>
-          </div>
+          </motion.div>
 
-          <div className="flex-1 flex flex-col justify-center space-y-10">
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex-1 flex flex-col justify-center space-y-10"
+          >
             <div className="space-y-3">
               <h3 className="text-xs font-bold tracking-widest text-black uppercase">Flagship Location</h3>
               <p className="text-2xl text-black font-bold uppercase leading-relaxed max-w-sm">
@@ -387,7 +505,7 @@ function Location() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -443,16 +561,29 @@ function LocationsBarbers() {
   ];
 
   return (
-    <section id="barbers" className="py-32 px-6 lg:px-12 bg-black border-y border-gray-900">
+    <section id="barbers" className="py-32 px-6 lg:px-12 bg-black border-y border-gray-900 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-20 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-20 text-center"
+        >
           <h2 className="text-4xl md:text-5xl font-heading text-white font-black uppercase tracking-tighter mb-4">Locations & Barbers</h2>
           <p className="text-gray-400 font-body text-lg">Select your preferred branch and book your barber directly.</p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {branches.map(branch => (
-            <div key={branch.name} className="flex flex-col items-start w-full bg-[#0a0a0a] p-10 border border-gray-800 hover:border-gray-600 transition-colors">
+          {branches.map((branch, idx) => (
+            <motion.div 
+              key={branch.name} 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
+              className="flex flex-col items-start w-full bg-[#0a0a0a] p-10 border border-gray-800 hover:border-gray-600 transition-colors"
+            >
               {/* Location Overview Header */}
               <div className="w-full mb-10 pb-6 border-b border-gray-900">
                 <a href={branch.mapLink} target="_blank" rel="noreferrer" className="group flex flex-col items-start">
@@ -467,7 +598,7 @@ function LocationsBarbers() {
               {branch.barbers.length > 0 && (
                 <div className="w-full">
                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-6">Select a Barber to Book</h4>
-                  <div className="flex flex-wrap gap-x-8 gap-y-6">
+                  <div className="flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-6">
                     {branch.barbers.map(barber => {
                       const bookingText = `Hai, saya nak book dengan ${barber.name} [Date] [Time]`;
                       const customWaLink = `https://wa.me/${barber.phone}?text=${encodeURIComponent(bookingText)}`;
@@ -484,7 +615,7 @@ function LocationsBarbers() {
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -494,9 +625,15 @@ function LocationsBarbers() {
 
 function CTASection() {
   return (
-    <section id="contact" className="py-40 px-6 bg-black relative flex flex-col items-center text-center">
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-        <h2 className="text-[3.5rem] md:text-[5rem] font-heading font-black tracking-tighter text-white mb-10 leading-[1] uppercase">
+    <section id="contact" className="py-24 md:py-40 px-6 bg-black relative flex flex-col items-center text-center overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 max-w-4xl mx-auto flex flex-col items-center"
+      >
+        <h2 className="text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] font-heading font-black tracking-tighter text-white mb-10 leading-[1] uppercase">
           Your next cut is <br /> one tap away.
         </h2>
         
@@ -504,7 +641,7 @@ function CTASection() {
           <span>Book on WhatsApp</span>
           <ArrowUpRight className="w-4 h-4" />
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 }
