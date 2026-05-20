@@ -18,9 +18,6 @@ function Navbar() {
                src="/gro-logo.jpg" 
                alt="GRO Logo" 
                className="w-full h-full object-contain" 
-               onError={(e) => {
-                 e.currentTarget.style.opacity = '0';
-               }} 
              />
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
@@ -523,9 +520,6 @@ function Footer() {
                  src="/gro-logo.jpg" 
                  alt="GRO Logo" 
                  className="w-full h-full object-contain" 
-                 onError={(e) => {
-                   e.currentTarget.style.opacity = '0';
-                 }} 
                />
             </div>
             <div className="flex flex-col items-start leading-none gap-0.5">
