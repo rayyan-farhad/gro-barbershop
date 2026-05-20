@@ -13,11 +13,15 @@ function Navbar() {
         {/* Left */}
         <div className="flex items-center gap-3 cursor-pointer group">
           {/* Logo */}
-          <div className="h-10 w-10 relative flex items-center justify-center bg-white rounded-full border-[2.5px] border-black overflow-hidden group-hover:scale-105 transition-transform shrink-0">
-             <div className="flex flex-col items-center justify-center leading-none mt-0.5">
-               <span className="font-heading font-black text-xl tracking-tighter text-black">GR</span>
-               <span className="font-heading font-black text-[10px] tracking-widest text-black -mt-1.5">O</span>
-             </div>
+          <div className="h-12 w-12 relative flex items-center justify-center bg-white rounded-full overflow-hidden group-hover:scale-105 transition-transform shrink-0 border-2 border-black">
+             <img 
+               src="/gro-logo.jpg" 
+               alt="GRO Logo" 
+               className="w-full h-full object-contain" 
+               onError={(e) => {
+                 e.currentTarget.style.opacity = '0';
+               }} 
+             />
           </div>
           <div className="flex flex-col items-start leading-none gap-0.5">
             <span className="font-heading font-black text-lg tracking-tighter text-black uppercase group-hover:text-gray-600 transition-colors">GRO Barbershop</span>
@@ -514,11 +518,15 @@ function Footer() {
         {/* Col 1 */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 relative flex items-center justify-center bg-white rounded-full border-[2.5px] border-black overflow-hidden shrink-0">
-               <div className="flex flex-col items-center justify-center leading-none mt-0.5">
-                 <span className="font-heading font-black text-xl tracking-tighter text-black">GR</span>
-                 <span className="font-heading font-black text-[10px] tracking-widest text-black -mt-1.5">O</span>
-               </div>
+            <div className="h-14 w-14 relative flex items-center justify-center bg-white rounded-full overflow-hidden shrink-0 border-2 border-black">
+               <img 
+                 src="/gro-logo.jpg" 
+                 alt="GRO Logo" 
+                 className="w-full h-full object-contain" 
+                 onError={(e) => {
+                   e.currentTarget.style.opacity = '0';
+                 }} 
+               />
             </div>
             <div className="flex flex-col items-start leading-none gap-0.5">
               <span className="font-heading font-black text-2xl tracking-tighter text-black uppercase">GRO</span>
