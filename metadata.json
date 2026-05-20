@@ -1,0 +1,6 @@
+{
+  "name": "GRO Barbershop",
+  "description": "Premium landing page for GRO - Gunting Rambut Orang barbershop.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
