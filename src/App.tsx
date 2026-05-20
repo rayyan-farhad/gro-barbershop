@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowUpRight, Scissors, Instagram, Sparkles, BadgeCheck, MapPin, Star, MessageCircle, Map, ChevronRight, User } from "lucide-react";
 import { BlurText } from "./components/BlurText";
+import { GRO_LOGO } from "./logo";
 
 const WA_NUMBER = "601110501080";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20GRO%2C%20I%27d%20like%20to%20book%20a%20haircut.`;
@@ -15,7 +16,7 @@ function Navbar() {
           {/* Logo */}
           <div className="h-12 w-12 relative flex items-center justify-center bg-white rounded-full overflow-hidden group-hover:scale-105 transition-transform shrink-0 border-2 border-black">
              <img 
-               src="/gro-logo.jpg" 
+               src={GRO_LOGO} 
                alt="GRO Logo" 
                className="w-full h-full object-contain" 
              />
@@ -517,7 +518,7 @@ function Footer() {
           <div className="flex items-center gap-3">
             <div className="h-14 w-14 relative flex items-center justify-center bg-white rounded-full overflow-hidden shrink-0 border-2 border-black">
                <img 
-                 src="/gro-logo.jpg" 
+                 src={GRO_LOGO} 
                  alt="GRO Logo" 
                  className="w-full h-full object-contain" 
                />
