@@ -1,48 +1,67 @@
-# GRO Barbershop Landing Page
+# GRO Barbershop
 
-A premium, editorial-grade landing page for GRO (Gunting Rambut Orang) Barbershop in Perlis, Malaysia. Reengineered to evoke the visual sophistication of premium grooming brands like Forte Series, utilizing massive whitespace, high-contrast typography, and a quiet luxury aesthetic.
+A responsive website for **GRO (Gunting Rambut Orang)** in Perlis, Malaysia. The site brings services, branch locations, and barber contact options into one place, with direct WhatsApp booking links.
 
-## Tech Stack
-- React 18 + Vite
-- Tailwind CSS v4
-- Framer Motion (for subtle, editorial reveal animations)
-- Lucide React (for minimalist vector icons)
-- shadcn/ui principles (Clean, unopinionated structure)
+[View the live website](https://gro-phi.vercel.app/)
 
-## Running the App
+## What the project demonstrates
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-3. Build for production:
-   ```bash
-   npm run build
-   ```
+- Service cards with pricing and WhatsApp enquiry links
+- Branch and barber listings with individual booking links
+- Location information, map links, and an embedded map
+- Responsive navigation and layouts for desktop and mobile
+- Animated text and section transitions
+- A consistent black-and-white visual identity
 
-## Customization Guide
+Booking buttons open WhatsApp with a prepared message. This frontend does not store appointments or implement a booking backend.
 
-### Swapping Images
-All imagery is handled in `/src/App.tsx`. 
-Look for standard `img` tags with `src` attributes pointing to Unsplash placeholders. Replace these with actual high-resolution GRO photos:
-- **Hero Image:** First image in `Hero` component (approx line 73). Recommended: A clean, wide-angle shot of the shop interior or a premium portfolio shot.
-- **Story Image:** Image in the `About` component (approx line 105). Recommended: A vertical editorial shot of a barber in action or barber tools.
-- **Service Images:** Three images in the `Services` component. Update for Haircut, Perm, and Shop.
-- **Instagram Feed:** Four square thumbnails in the `Testimonials` component (approx line 231). 
+## Technology
 
-*Tip: For the Forte Series aesthetic, ensure uploaded images are bright, sharp, well-lit, and favor neutral or warm tones.*
+- React 19 and TypeScript
+- Vite 6
+- Tailwind CSS 4
+- Motion for React
+- Lucide React icons
 
-### Content & Pricing
-Content is directly editable in `/src/App.tsx`:
-- Update service prices in the `Services` component if promo rates change.
-- WhatsApp number is centrally configured at the top of `/src/App.tsx` (`WA_NUMBER`). Updating this one variable will update all links and buttons across the entire website.
+## Run locally
 
-### Theme Colors
-Color variables are stored in `/src/index.css` via the Tailwind v4 `@theme` block. 
-You can fine-tune the ivories, off-whites, and charcoals to match specific brand guidelines.
+Use Node.js 22 and npm.
 
-Enjoy your new premium storefront!
+```bash
+git clone https://github.com/rayyan-farhad/gro-barbershop.git
+cd gro-barbershop
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+The current website does not require an API key. The Gemini and app URL variables in `.env.example` are inherited from the original AI Studio template and are not needed for the frontend shown here.
+
+## Check and build
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+`npm run lint` runs the TypeScript compiler with `--noEmit`. The production build is written to `dist/`. There is currently no automated test script.
+
+## Project structure
+
+- `src/App.tsx` — page sections, services, branches, barber listings, and booking links
+- `src/components/BlurText.tsx` — animated heading component
+- `src/index.css` — typography and theme styles
+- `src/logo.ts` and `public/gro-logo.jpg` — logo assets
+- `vite.config.ts` — React and Tailwind build configuration
+
+## Updating the content
+
+Edit service descriptions and prices in `src/App.tsx`. The general booking link uses `WA_NUMBER`; each barber's booking link uses the phone number in that barber's listing.
+
+Update imagery in the relevant page sections. Current stock photography comes from Unsplash; replace it with approved shop photography when available. Review branch details, pricing, promotional copy, and contact information before using the site for a live business.
+
+## Project context
+
+This repository presents frontend implementation and interface work. GRO branding belongs to its respective owner; the project does not claim ownership of third-party imagery or brand assets.
